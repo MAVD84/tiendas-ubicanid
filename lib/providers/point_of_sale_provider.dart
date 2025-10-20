@@ -24,20 +24,13 @@ class PointOfSaleProvider with ChangeNotifier {
   }
 
   Future<void> addPointOfSale(PointOfSale pointOfSale) async {
-    final newPointOfSale = await DatabaseHelper.instance.create(pointOfSale);
-    _pointsOfSale.insert(0, newPointOfSale); 
-    notifyListeners();
+    await DatabaseHelper.instance.create(pointOfSale);
+    await loadPointsOfSale();
   }
 
   Future<void> updatePointOfSale(PointOfSale pointOfSale) async {
     await DatabaseHelper.instance.update(pointOfSale);
-    final index = _pointsOfSale.indexWhere((pos) => pos.id == pointOfSale.id);
-    if (index != -1) {
-      _pointsOfSale[index] = pointOfSale;
-      notifyListeners();
-    } else {
-      loadPointsOfSale();
-    }
+    await loadPointsOfSale();
   }
 
   Future<void> deletePointOfSale(int id) async {
