@@ -18,13 +18,25 @@ class DatabaseHelper {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path, version: 3, onCreate: _createDB, onUpgrade: _onUpgrade);
+  }
+
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('ALTER TABLE points_of_sale ADD COLUMN price REAL NOT NULL DEFAULT 0.0');
+    }
+    if (oldVersion < 3) {
+      await db.execute('ALTER TABLE points_of_sale ADD COLUMN notes TEXT');
+      await db.execute('ALTER TABLE points_of_sale ADD COLUMN visits TEXT');
+    }
   }
 
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT NOT NULL';
     const intType = 'INTEGER NOT NULL';
+    const realType = 'REAL NOT NULL';
+    const nullableTextType = 'TEXT';
 
     await db.execute('''
 CREATE TABLE points_of_sale (
@@ -38,7 +50,10 @@ CREATE TABLE points_of_sale (
   zipCode $textType,
   phone $textType,
   plateQuantity $intType,
-  serialNumbers $textType
+  serialNumbers $textType,
+  price $realType,
+  notes $nullableTextType,
+  visits $nullableTextType
 )
 ''');
   }
@@ -53,7 +68,7 @@ CREATE TABLE points_of_sale (
     final db = await instance.database;
     final maps = await db.query(
       'points_of_sale',
-      columns: ['id', 'date', 'business', 'owner', 'address', 'city', 'state', 'zipCode', 'phone', 'plateQuantity', 'serialNumbers'],
+      columns: ['id', 'date', 'business', 'owner', 'address', 'city', 'state', 'zipCode', 'phone', 'plateQuantity', 'serialNumbers', 'price', 'notes', 'visits'],
       where: 'id = ?',
       whereArgs: [id],
     );

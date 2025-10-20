@@ -10,6 +10,9 @@ class PointOfSale {
   String phone;
   int plateQuantity;
   String serialNumbers;
+  double price;
+  String? notes;
+  String? visits;
 
   PointOfSale({
     this.id,
@@ -23,6 +26,9 @@ class PointOfSale {
     required this.phone,
     required this.plateQuantity,
     required this.serialNumbers,
+    required this.price,
+    this.notes,
+    this.visits,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +44,9 @@ class PointOfSale {
       'phone': phone,
       'plateQuantity': plateQuantity,
       'serialNumbers': serialNumbers,
+      'price': price,
+      'notes': notes,
+      'visits': visits,
     };
   }
 
@@ -54,6 +63,9 @@ class PointOfSale {
       phone: map['phone'],
       plateQuantity: map['plateQuantity'],
       serialNumbers: map['serialNumbers'],
+      price: map['price']?.toDouble() ?? 0.0,
+      notes: map['notes'] ?? '',
+      visits: map['visits'],
     );
   }
 }
