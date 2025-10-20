@@ -42,7 +42,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
     _phoneController = TextEditingController(text: widget.pointOfSale?.phone ?? '');
     _plateQuantityController = TextEditingController(text: widget.pointOfSale?.plateQuantity.toString() ?? '0');
     
-    final serialNumbers = widget.pointOfSale?.serialNumbers?.split(',').where((sn) => sn.isNotEmpty).toList() ?? [];
+    final serialNumbers = widget.pointOfSale?.serialNumbers.split(',').where((sn) => sn.isNotEmpty).toList() ?? [];
     _serialNumberControllers = serialNumbers
         .map((sn) => TextEditingController(text: sn))
         .toList();
@@ -175,6 +175,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Fecha',
                   suffixIcon: Icon(Icons.calendar_today),
+                  border: OutlineInputBorder(),
                 ),
                 readOnly: true,
                 onTap: () => _selectDate(context, _dateController),
@@ -185,9 +186,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _businessController,
-                decoration: const InputDecoration(labelText: 'Comercio'),
+                decoration: const InputDecoration(labelText: 'Comercio', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingrese un comercio.';
@@ -195,9 +197,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _ownerController,
-                decoration: const InputDecoration(labelText: 'Dueño'),
+                decoration: const InputDecoration(labelText: 'Dueño', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingrese un dueño.';
@@ -205,9 +208,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _addressController,
-                decoration: const InputDecoration(labelText: 'Dirección'),
+                decoration: const InputDecoration(labelText: 'Dirección', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingrese una dirección.';
@@ -215,9 +219,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _cityController,
-                decoration: const InputDecoration(labelText: 'Ciudad'),
+                decoration: const InputDecoration(labelText: 'Ciudad', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingrese una ciudad.';
@@ -225,9 +230,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _stateController,
-                decoration: const InputDecoration(labelText: 'Estado'),
+                decoration: const InputDecoration(labelText: 'Estado', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor, ingrese un estado.';
@@ -235,9 +241,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _zipCodeController,
-                decoration: const InputDecoration(labelText: 'Código postal'),
+                decoration: const InputDecoration(labelText: 'Código postal', border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -246,9 +253,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _phoneController,
-                decoration: const InputDecoration(labelText: 'Teléfono'),
+                decoration: const InputDecoration(labelText: 'Teléfono', border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -257,9 +265,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _plateQuantityController,
-                decoration: const InputDecoration(labelText: 'Cantidad de placas'),
+                decoration: const InputDecoration(labelText: 'Cantidad de placas', border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -268,6 +277,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               ..._buildSerialNumberFields(),
               const SizedBox(height: 10),
               ElevatedButton.icon(
@@ -287,7 +297,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
               const SizedBox(height: 20),
               TextFormField(
                 controller: _priceController,
-                decoration: const InputDecoration(labelText: 'Precio'),
+                decoration: const InputDecoration(labelText: 'Precio', border: OutlineInputBorder()),
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -299,9 +309,10 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _notesController,
-                decoration: const InputDecoration(labelText: 'Notas'),
+                decoration: const InputDecoration(labelText: 'Notas', border: OutlineInputBorder()),
                 maxLines: 3,
               ),
               const SizedBox(height: 20),
@@ -318,45 +329,52 @@ class _AddEditScreenState extends State<AddEditScreen> {
 
   List<Widget> _buildSerialNumberFields() {
     return List.generate(_serialNumberControllers.length, (index) {
-      return Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              controller: _serialNumberControllers[index],
-              decoration: const InputDecoration(labelText: 'Número de serie'),
-              validator: (value) => null,
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: _serialNumberControllers[index],
+                decoration: const InputDecoration(labelText: 'Número de serie', border: OutlineInputBorder()),
+                validator: (value) => null,
+              ),
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.remove_circle_outline),
-            onPressed: () => _removeSerialNumberField(index),
-          ),
-        ],
+            IconButton(
+              icon: const Icon(Icons.remove_circle_outline),
+              onPressed: () => _removeSerialNumberField(index),
+            ),
+          ],
+        ),
       );
     });
   }
 
   List<Widget> _buildVisitFields() {
     return List.generate(_visitDateControllers.length, (index) {
-      return Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              controller: _visitDateControllers[index],
-              decoration: const InputDecoration(
-                labelText: 'Fecha de Visita',
-                suffixIcon: Icon(Icons.calendar_today),
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: _visitDateControllers[index],
+                decoration: const InputDecoration(
+                  labelText: 'Fecha de Visita',
+                  suffixIcon: Icon(Icons.calendar_today),
+                  border: OutlineInputBorder(),
+                ),
+                readOnly: true,
+                onTap: () => _selectDate(context, _visitDateControllers[index]),
+                validator: (value) => null,
               ),
-              readOnly: true,
-              onTap: () => _selectDate(context, _visitDateControllers[index]),
-              validator: (value) => null,
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.remove_circle_outline),
-            onPressed: () => _removeVisitField(index),
-          ),
-        ],
+            IconButton(
+              icon: const Icon(Icons.remove_circle_outline),
+              onPressed: () => _removeVisitField(index),
+            ),
+          ],
+        ),
       );
     });
   }
