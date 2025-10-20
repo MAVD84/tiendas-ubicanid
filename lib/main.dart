@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'providers/point_of_sale_provider.dart';
-import 'providers/theme_provider.dart';
-import 'screens/home_screen.dart';
+import 'package:myapp/providers/point_of_sale_provider.dart';
+import 'package:myapp/providers/theme_provider.dart';
+import 'package:myapp/screens/home_screen.dart';
 
 void main() {
   runApp(

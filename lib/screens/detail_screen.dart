@@ -11,7 +11,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final serialNumbers = pointOfSale.serialNumbers.split(',') ?? [];
+    final serialNumbers = pointOfSale.serialNumbers.split(',');
     final visits = pointOfSale.visits?.split(',') ?? [];
 
     return Scaffold(
